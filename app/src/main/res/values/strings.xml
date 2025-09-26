@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Cook</string>
+    <string name="title_home">首页</string>
+    <string name="title_favorites">收藏</string>
+    <string name="title_cooking">烹饪</string>
+    <string name="title_profile">我</string>
+</resources>

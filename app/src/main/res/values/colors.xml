@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 原有颜色 -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    
+    <!-- Cook应用配色方案 - 参考下厨房风格 -->
+    <!-- 主色调 - 温暖的橙红色系 -->
+    <color name="cook_primary">#FFFF5722</color>
+    <color name="cook_primary_dark">#FFE64A19</color>
+    <color name="cook_primary_light">#FFFF8A65</color>
+    
+    <!-- 辅助色 - 温暖的橙色 -->
+    <color name="cook_accent">#FFFF9800</color>
+    <color name="cook_accent_dark">#FFF57C00</color>
+    <color name="cook_accent_light">#FFFFB74D</color>
+    
+    <!-- 背景色 - 温暖的米色系 -->
+    <color name="cook_background">#FFFFF8E1</color>
+    <color name="cook_surface">#FFFFFFFF</color>
+    <color name="cook_surface_variant">#FFFFF3E0</color>
+    
+    <!-- 文字颜色 -->
+    <color name="cook_on_primary">#FFFFFFFF</color>
+    <color name="cook_on_secondary">#FFFFFFFF</color>
+    <color name="cook_on_background">#FF3E2723</color>
+    <color name="cook_on_surface">#FF3E2723</color>
+    <color name="cook_on_surface_variant">#FF5D4037</color>
+    
+    <!-- 状态颜色 -->
+    <color name="cook_success">#FF4CAF50</color>
+    <color name="cook_warning">#FFFF9800</color>
+    <color name="cook_error">#FFF44336</color>
+    
+    <!-- 底部导航栏 - 下厨房风格 -->
+    <color name="cook_bottom_nav_background">#FFFFFFFF</color>
+    <color name="cook_bottom_nav_selected">#FFFF5722</color>
+    <color name="cook_bottom_nav_unselected">#FF999999</color>
+    <color name="cook_bottom_nav_indicator">#FFFF5722</color>
+</resources>

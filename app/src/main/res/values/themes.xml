@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Cook4Android" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/cook_primary</item>
+        <item name="colorPrimaryVariant">@color/cook_primary_dark</item>
+        <item name="colorOnPrimary">@color/cook_on_primary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/cook_accent</item>
+        <item name="colorSecondaryVariant">@color/cook_accent_dark</item>
+        <item name="colorOnSecondary">@color/cook_on_secondary</item>
+        <!-- Background colors -->
+        <item name="android:colorBackground">@color/cook_background</item>
+        <item name="colorSurface">@color/cook_surface</item>
+        <item name="colorOnBackground">@color/cook_on_background</item>
+        <item name="colorOnSurface">@color/cook_on_surface</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/cook_primary_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@color/cook_surface</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

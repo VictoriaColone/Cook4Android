@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CookBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/cook_bottom_nav_background</item>
+        <item name="itemIconTint">@color/bottom_nav_item_colors</item>
+        <item name="itemTextColor">@color/bottom_nav_item_colors</item>
+        <item name="android:elevation">0dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="itemRippleColor">@android:color/transparent</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemIconSize">20dp</item>
+        <item name="itemTextAppearanceActive">@style/CookBottomNavTextActive</item>
+        <item name="itemTextAppearanceInactive">@style/CookBottomNavTextInactive</item>
+    </style>
+    
+    <!-- 激活状态文字样式 -->
+    <style name="CookBottomNavTextActive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/cook_bottom_nav_selected</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    
+    <!-- 非激活状态文字样式 -->
+    <style name="CookBottomNavTextInactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/cook_bottom_nav_unselected</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+</resources>
