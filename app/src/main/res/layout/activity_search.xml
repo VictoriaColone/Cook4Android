@@ -1,0 +1,81 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    >
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:liftOnScroll="true">
+
+        <!-- 顶部容器：与首页保持一致的顶部间距 16dp，搜索框高度 40dp -->
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="返回"
+                android:src="@drawable/ic_back_24"
+                />
+
+            <LinearLayout
+                android:id="@+id/searchInputContainer"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_search_pill"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:paddingTop="2dp"
+                    android:src="@drawable/ic_search_24"
+                    />
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="8dp"
+                    android:singleLine="true"
+                    android:gravity="center_vertical"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:textColorHint="#8E9AA7"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

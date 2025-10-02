@@ -22,4 +22,13 @@
         <item name="android:windowLightNavigationBar">true</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Cook4Android.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Cook4Android.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Cook4Android.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
