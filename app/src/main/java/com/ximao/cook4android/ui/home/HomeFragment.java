@@ -49,6 +49,17 @@ public class HomeFragment extends Fragment {
     private final int pageSize = 20;
     private boolean hasMore = true;
     private boolean isLoading = false;
+    
+    // 保存滚动位置和数据
+    private static final String KEY_SCROLL_POSITION = "scroll_position";
+    private static final String KEY_SCROLL_OFFSET = "scroll_offset";
+    private static final String KEY_IS_FIRST_LOAD = "is_first_load";
+    private static final String KEY_CURRENT_PAGE = "current_page";
+    private static final String KEY_HAS_MORE = "has_more";
+    private int savedScrollPosition = 0;
+    private int savedScrollOffset = 0;
+    private boolean isFirstLoad = true;
+    private List<RecipeItem> cachedItems = new ArrayList<>();
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,8 +79,23 @@ public class HomeFragment extends Fragment {
         setupRecycler();
         setupRefresh();
 
-        swipeRefreshLayout.setRefreshing(true);
-        refresh();
+        // 恢复保存的滚动位置和加载状态
+        if (savedInstanceState != null) {
+            savedScrollPosition = savedInstanceState.getInt(KEY_SCROLL_POSITION, 0);
+            savedScrollOffset = savedInstanceState.getInt(KEY_SCROLL_OFFSET, 0);
+            isFirstLoad = savedInstanceState.getBoolean(KEY_IS_FIRST_LOAD, true);
+            currentPage = savedInstanceState.getInt(KEY_CURRENT_PAGE, 1);
+            hasMore = savedInstanceState.getBoolean(KEY_HAS_MORE, true);
+        }
+
+        // 只在首次加载时刷新数据
+        if (isFirstLoad) {
+            swipeRefreshLayout.setRefreshing(true);
+            refresh();
+        } else {
+            // 非首次加载，恢复缓存的数据
+            restoreCachedData();
+        }
     }
 
     private void setupSearchEntry() {
@@ -111,7 +137,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRefresh() {
-        swipeRefreshLayout.setOnRefreshListener(this::refresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            // 手动下拉刷新时，重置滚动位置
+            savedScrollPosition = 0;
+            savedScrollOffset = 0;
+            refresh();
+        });
     }
 
     private void refresh() {
@@ -125,9 +156,18 @@ public class HomeFragment extends Fragment {
             @Override public void onSuccess(List<RecipeItem> list) {
                 mainHandler.post(() -> {
                     adapter.setItems(list);
+                    // 缓存数据
+                    cachedItems.clear();
+                    cachedItems.addAll(list);
                     isLoading = false;
                     hasMore = list.size() >= pageSize;
                     swipeRefreshLayout.setRefreshing(false);
+                    
+                    // 首次加载完成后，标记为非首次加载
+                    isFirstLoad = false;
+                    
+                    // 恢复滚动位置
+                    restoreScrollPosition();
                 });
             }
             @Override public void onError(Exception e) {
@@ -152,6 +192,8 @@ public class HomeFragment extends Fragment {
                 mainHandler.post(() -> {
                     adapter.setShowLoadingFooter(false);
                     adapter.addItems(list);
+                    // 缓存新加载的数据
+                    cachedItems.addAll(list);
                     currentPage = nextPage;
                     isLoading = false;
                     hasMore = list.size() >= pageSize;
@@ -213,6 +255,57 @@ public class HomeFragment extends Fragment {
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return (int) (dp * density);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // 保存当前滚动位置和加载状态
+        if (recyclerView != null && recyclerView.getLayoutManager() != null) {
+            GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+            int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
+            View firstVisibleView = layoutManager.findViewByPosition(firstVisiblePosition);
+            int offset = 0;
+            if (firstVisibleView != null) {
+                offset = firstVisibleView.getTop();
+            }
+            outState.putInt(KEY_SCROLL_POSITION, firstVisiblePosition);
+            outState.putInt(KEY_SCROLL_OFFSET, offset);
+        }
+        outState.putBoolean(KEY_IS_FIRST_LOAD, isFirstLoad);
+        outState.putInt(KEY_CURRENT_PAGE, currentPage);
+        outState.putBoolean(KEY_HAS_MORE, hasMore);
+    }
+
+    private void restoreCachedData() {
+        if (!cachedItems.isEmpty()) {
+            // 恢复缓存的数据
+            adapter.setItems(cachedItems);
+            // 恢复滚动位置
+            restoreScrollPosition();
+        } else {
+            // 如果没有缓存数据，则重新加载
+            swipeRefreshLayout.setRefreshing(true);
+            refresh();
+        }
+    }
+
+    private void restoreScrollPosition() {
+        if (recyclerView != null && recyclerView.getLayoutManager() != null && savedScrollPosition > 0) {
+            // 延迟恢复滚动位置，确保RecyclerView已经完成布局
+            recyclerView.post(() -> {
+                if (recyclerView.getLayoutManager() != null) {
+                    ((GridLayoutManager) recyclerView.getLayoutManager())
+                            .scrollToPositionWithOffset(savedScrollPosition, savedScrollOffset);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        cancelCurrentCall();
     }
 
     interface FetchCallback {
